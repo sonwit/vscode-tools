@@ -1,0 +1,44 @@
+{
+  "name": "vscode-logger",
+  "displayName": "VSCode Logger",
+  "description": "Insert a console.log for the selected variable on the next line.",
+  "version": "0.0.1",
+  "publisher": "sonwit",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:vscode-logger.insertLog"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "vscode-logger.insertLog",
+        "title": "Insert Console Log"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "vscode-logger.insertLog",
+        "key": "ctrl+alt+l",
+        "mac": "ctrl+option+l",
+        "when": "editorHasSelection"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "echo \"No tests configured\""
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@vscode/test-electron": "^2.3.7",
+    "typescript": "^5.3.3"
+  }
+}
