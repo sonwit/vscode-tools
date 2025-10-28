@@ -1,9 +1,13 @@
 {
-  "name": "vscode-logger",
-  "displayName": "VSCode Logger",
-  "description": "Insert a console.log for the selected variable on the next line.",
+  "name": "vscode-tools",
+  "displayName": "VSCode tools",
+  "description": "Useful tools for VSCode to enhance your coding experience.",
   "version": "0.0.1",
   "publisher": "sonwit",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sonwit/vscode-tools.git"
+  },
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -11,22 +15,33 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:vscode-logger.insertLog"
+    "onCommand:vscode-tools.insertLog",
+    "onCommand:vscode-tools.duplicateSelection"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "vscode-logger.insertLog",
+        "command": "vscode-tools.insertLog",
         "title": "Insert Console Log"
+      },
+      {
+        "command": "vscode-tools.duplicateSelection",
+        "title": "Duplicate Selection or Line"
       }
     ],
     "keybindings": [
       {
-        "command": "vscode-logger.insertLog",
+        "command": "vscode-tools.insertLog",
         "key": "ctrl+alt+l",
         "mac": "ctrl+option+l",
         "when": "editorHasSelection"
+      },
+      {
+        "command": "vscode-tools.duplicateSelection",
+        "key": "ctrl+d",
+        "mac": "ctrl+cmd+d",
+        "when": "editorTextFocus"
       }
     ]
   },
