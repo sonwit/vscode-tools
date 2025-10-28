@@ -39,8 +39,8 @@
       },
       {
         "command": "vscode-tools.duplicateSelection",
-        "key": "ctrl+d",
-        "mac": "ctrl+cmd+d",
+        "key": "ctrl+alt+d",
+        "mac": "ctrl+option+d",
         "when": "editorTextFocus"
       }
     ]
