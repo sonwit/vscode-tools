@@ -1,10 +1,13 @@
-# VSCode Logger
+# VS Code Tools
 
-VSCode extension that inserts a `console.log` for the selected variable on the next line. Use `Ctrl+Alt+L` (Windows/Linux) or `Ctrl+Option+L` (macOS) to trigger the command.
+VS Code extension that streamlines a couple of everyday editing tasks:
+
+- Insert a `console.log` for the current selection with `Ctrl+Alt+L` (Windows/Linux) or `Ctrl+Option+L` (macOS).
+- Duplicate the current selection, or the whole line when nothing is selected, with `Ctrl+D` (Windows/Linux) or `Ctrl+Cmd+D` (macOS).
 
 ## Features
-- Works with single selections or multi-cursor selections.
-- Falls back to the word under the cursor if nothing is selected.
+- Works with multi-cursor selections and keeps the cursors on the duplicated content.
+- Falls back to the word under each cursor if nothing is selected when inserting logs.
 
 ## Development
 Install dependencies and compile the extension:
