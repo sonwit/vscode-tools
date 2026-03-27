@@ -18,3 +18,14 @@ npm run compile
 ```
 
 Launch the extension by pressing `F5` in VS Code to open a new Extension Development Host window.
+
+## Install Locally (VSIX)
+Build and install the extension in one command:
+
+```bash
+npm install && npm run compile && npx @vscode/vsce package && code --install-extension vscode-tools-0.0.1.vsix
+```
+
+This creates `vscode-tools-0.0.1.vsix` and installs it into your local VS Code.
+
+If `code` is not available in your shell, open VS Code and run the command palette action `Shell Command: Install 'code' command in PATH`.
