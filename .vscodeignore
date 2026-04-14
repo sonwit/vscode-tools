@@ -3,5 +3,8 @@
 out/**
 node_modules/**
 .git/**
+.claude/**
+.husky/**
 tsconfig.json
 src/**
+**/.env

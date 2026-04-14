@@ -16,7 +16,9 @@
   ],
   "activationEvents": [
     "onCommand:vscode-tools.insertLog",
-    "onCommand:vscode-tools.duplicateSelection"
+    "onCommand:vscode-tools.duplicateSelection",
+    "onCommand:vscode-tools.gitStash",
+    "onCommand:vscode-tools.gitStashList"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -28,6 +30,14 @@
       {
         "command": "vscode-tools.duplicateSelection",
         "title": "Duplicate Selection or Line"
+      },
+      {
+        "command": "vscode-tools.gitStash",
+        "title": "Git Stash: Save Changes"
+      },
+      {
+        "command": "vscode-tools.gitStashList",
+        "title": "Git Stash: List & Manage"
       }
     ],
     "keybindings": [
