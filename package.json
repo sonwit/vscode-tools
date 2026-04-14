@@ -22,6 +22,24 @@
   ],
   "main": "./dist/extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activityBar": [
+        {
+          "id": "gitStash",
+          "title": "Git Stash",
+          "icon": "media/git-stash.svg"
+        }
+      ]
+    },
+    "views": {
+      "gitStash": [
+        {
+          "type": "webview",
+          "id": "vscode-tools.gitStashView",
+          "name": "Git Stash"
+        }
+      ]
+    },
     "commands": [
       {
         "command": "vscode-tools.insertLog",
@@ -38,8 +56,22 @@
       {
         "command": "vscode-tools.gitStashList",
         "title": "Git Stash: List & Manage"
+      },
+      {
+        "command": "vscode-tools.gitStashRefresh",
+        "title": "Git Stash: Refresh",
+        "icon": "$(refresh)"
       }
     ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "vscode-tools.gitStashRefresh",
+          "when": "view == vscode-tools.gitStashView",
+          "group": "navigation"
+        }
+      ]
+    },
     "keybindings": [
       {
         "command": "vscode-tools.insertLog",

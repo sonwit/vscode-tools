@@ -4,6 +4,7 @@ VS Code extension that streamlines a couple of everyday editing tasks:
 
 - Insert a `console.log` for the current selection with `Ctrl+Alt+L` (Windows/Linux) or `Ctrl+Option+L` (macOS).
 - Duplicate the current selection, or the whole line when nothing is selected, with `Ctrl+D` (Windows/Linux) or `Ctrl+Cmd+D` (macOS).
+- **Git Stash sidebar panel** — a dedicated sidebar with a full GUI for git stash management. Select files to stash with checkboxes, enter a message, and browse/apply/pop/drop/diff your stashes without leaving the editor.
 
 ## Features
 - Works with multi-cursor selections and keeps the cursors on the duplicated content.
