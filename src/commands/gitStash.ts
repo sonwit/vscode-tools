@@ -1,27 +1,11 @@
 import * as vscode from 'vscode';
-import { exec } from 'child_process';
-
-function run(cmd: string, cwd: string): Promise<string> {
-  return new Promise((resolve, reject) => {
-    exec(cmd, { cwd }, (err, stdout, stderr) => {
-      if (err) {
-        reject(new Error(stderr || err.message));
-      } else {
-        resolve(stdout.trim());
-      }
-    });
-  });
-}
-
-function getWorkspaceRoot(): string | undefined {
-  return vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
-}
+import { escapeShellArg, getWorkspaceGitRoot, run } from '../utils/git';
 
 export function registerGitStashCommand() {
   return vscode.commands.registerCommand('vscode-tools.gitStash', async () => {
-    const cwd = getWorkspaceRoot();
+    const cwd = await getWorkspaceGitRoot();
     if (!cwd) {
-      vscode.window.showErrorMessage('No workspace folder open.');
+      vscode.window.showErrorMessage('No git repository found in the current workspace.');
       return;
     }
 
@@ -112,9 +96,9 @@ export function registerGitStashCommand() {
 
 export function registerGitStashListCommand() {
   return vscode.commands.registerCommand('vscode-tools.gitStashList', async () => {
-    const cwd = getWorkspaceRoot();
+    const cwd = await getWorkspaceGitRoot();
     if (!cwd) {
-      vscode.window.showErrorMessage('No workspace folder open.');
+      vscode.window.showErrorMessage('No git repository found in the current workspace.');
       return;
     }
 
@@ -200,8 +184,4 @@ export function registerGitStashListCommand() {
       vscode.window.showErrorMessage(`Stash ${(action as { action: string }).action} failed: ${msg}`);
     }
   });
-}
-
-function escapeShellArg(arg: string): string {
-  return `'${arg.replace(/'/g, "'\\''")}'`;
 }

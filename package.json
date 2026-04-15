@@ -2,7 +2,7 @@
   "name": "vscode-tools",
   "displayName": "VSCode tools",
   "description": "Useful tools for VSCode to enhance your coding experience.",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "publisher": "sonwit",
   "repository": {
     "type": "git",
@@ -18,12 +18,14 @@
     "onCommand:vscode-tools.insertLog",
     "onCommand:vscode-tools.duplicateSelection",
     "onCommand:vscode-tools.gitStash",
-    "onCommand:vscode-tools.gitStashList"
+    "onCommand:vscode-tools.gitStashList",
+    "onCommand:vscode-tools.gitStashRefresh",
+    "onView:vscode-tools.gitStashView"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "viewsContainers": {
-      "activityBar": [
+      "activitybar": [
         {
           "id": "gitStash",
           "title": "Git Stash",

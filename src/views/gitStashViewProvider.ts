@@ -1,21 +1,5 @@
 import * as vscode from 'vscode';
-import { exec } from 'child_process';
-
-function run(cmd: string, cwd: string): Promise<string> {
-  return new Promise((resolve, reject) => {
-    exec(cmd, { cwd }, (err, stdout, stderr) => {
-      if (err) {
-        reject(new Error(stderr || err.message));
-      } else {
-        resolve(stdout.trim());
-      }
-    });
-  });
-}
-
-function escapeShellArg(arg: string): string {
-  return `'${arg.replace(/'/g, "'\\''")}'`;
-}
+import { escapeShellArg, getWorkspaceGitRoot, run } from '../utils/git';
 
 interface StashEntry {
   ref: string;
@@ -85,16 +69,16 @@ export class GitStashViewProvider implements vscode.WebviewViewProvider {
     this._sendState();
   }
 
-  private _getCwd(): string | undefined {
-    return vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+  private async _getCwd(): Promise<string | undefined> {
+    return getWorkspaceGitRoot();
   }
 
   private async _sendState() {
     if (!this._view) return;
 
-    const cwd = this._getCwd();
+    const cwd = await this._getCwd();
     if (!cwd) {
-      this._view.webview.postMessage({ type: 'state', error: 'No workspace folder open.' });
+      this._view.webview.postMessage({ type: 'state', error: 'No git repository found in the current workspace.' });
       return;
     }
 
@@ -136,7 +120,7 @@ export class GitStashViewProvider implements vscode.WebviewViewProvider {
   }
 
   private async _stashFiles(files: string[] | null, message: string) {
-    const cwd = this._getCwd();
+    const cwd = await this._getCwd();
     if (!cwd) return;
 
     try {
@@ -156,7 +140,7 @@ export class GitStashViewProvider implements vscode.WebviewViewProvider {
   }
 
   private async _stashAction(action: 'apply' | 'pop' | 'drop', ref: string) {
-    const cwd = this._getCwd();
+    const cwd = await this._getCwd();
     if (!cwd) return;
 
     try {
@@ -173,7 +157,7 @@ export class GitStashViewProvider implements vscode.WebviewViewProvider {
   }
 
   private async _showStashDiff(ref: string) {
-    const cwd = this._getCwd();
+    const cwd = await this._getCwd();
     if (!cwd) return;
 
     try {
@@ -550,7 +534,7 @@ export class GitStashViewProvider implements vscode.WebviewViewProvider {
         const fileName = f.filePath.split('/').pop();
         const dir = f.filePath.includes('/') ? f.filePath.substring(0, f.filePath.lastIndexOf('/')) : '';
         return '<div class="file-item" data-index="' + i + '">'
-          + '<input type="checkbox" data-path="' + f.filePath + '">'
+          + '<input type="checkbox" data-index="' + i + '">'
           + '<span class="file-status ' + cls + '">' + label + '</span>'
           + '<span class="file-name" title="' + f.filePath + '">' + fileName
           + (dir ? ' <span style="color:var(--vscode-descriptionForeground)">' + dir + '</span>' : '')
@@ -621,7 +605,9 @@ export class GitStashViewProvider implements vscode.WebviewViewProvider {
   // Stash button
   els.stashBtn.addEventListener('click', () => {
     const boxes = els.fileList.querySelectorAll('input[type="checkbox"]:checked');
-    const files = Array.from(boxes).map(b => b.dataset.path);
+    const files = Array.from(boxes)
+      .map(b => state.changedFiles[Number(b.dataset.index)]?.filePath)
+      .filter(Boolean);
     const message = els.stashMessage.value.trim();
 
     vscode.postMessage({
