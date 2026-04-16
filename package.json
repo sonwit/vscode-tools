@@ -2,7 +2,7 @@
   "name": "vscode-tools",
   "displayName": "VSCode tools",
   "description": "Useful tools for VSCode to enhance your coding experience.",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "publisher": "sonwit",
   "repository": {
     "type": "git",
@@ -17,6 +17,8 @@
   "activationEvents": [
     "onCommand:vscode-tools.insertLog",
     "onCommand:vscode-tools.duplicateSelection",
+    "onCommand:vscode-tools.openAgentPanel",
+    "onView:vscode-tools.agentDemoView",
     "onCommand:vscode-tools.gitStash",
     "onCommand:vscode-tools.gitStashList",
     "onCommand:vscode-tools.gitStashRefresh",
@@ -27,6 +29,11 @@
     "viewsContainers": {
       "activitybar": [
         {
+          "id": "agentDemo",
+          "title": "Agent Demo",
+          "icon": "media/agent-demo.svg"
+        },
+        {
           "id": "gitStash",
           "title": "Git Stash",
           "icon": "media/git-stash.svg"
@@ -34,6 +41,13 @@
       ]
     },
     "views": {
+      "agentDemo": [
+        {
+          "type": "webview",
+          "id": "vscode-tools.agentDemoView",
+          "name": "Agent Demo"
+        }
+      ],
       "gitStash": [
         {
           "type": "webview",
@@ -50,6 +64,10 @@
       {
         "command": "vscode-tools.duplicateSelection",
         "title": "Duplicate Selection or Line"
+      },
+      {
+        "command": "vscode-tools.openAgentPanel",
+        "title": "Open Agent Demo"
       },
       {
         "command": "vscode-tools.gitStash",
@@ -85,6 +103,12 @@
         "command": "vscode-tools.duplicateSelection",
         "key": "ctrl+alt+d",
         "mac": "ctrl+option+d",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "vscode-tools.openAgentPanel",
+        "key": "ctrl+alt+shift+a",
+        "mac": "ctrl+option+shift+a",
         "when": "editorTextFocus"
       }
     ]
